@@ -1,7 +1,11 @@
 # pydes
 Multi-objective Stochastic Bayesian Optimization with Quantified Uncertainties on the Pareto Front
 
-This module is called pydes. 
+This module is called pydes. \\
+
+To install the package do the following:
+pip install git+git://github.com/PredictiveScienceLab/GPy.git@pymc  \\
+
 The simple examples ex1.py, ex2.py provide a self explanatory overview of using pydes.
 This code works for maximizing two functions (so the user would have to include that in their function object).\\
 
@@ -9,7 +13,6 @@ The user mainly needs to specify the objective function ```obj_func``` as an obj
 
 After each iteration a plot depicting the state of the Pareto Frontier is generated, this can be controlled by a make_plots flag  
 
-More documentation to follow:
+More documentation to follow.
 
-To install the package do the following:
-pip install git+git://github.com/PredictiveScienceLab/GPy.git@pymc
+
