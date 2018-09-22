@@ -20,15 +20,16 @@ The user mainly needs to specify the objective function ```obj_func``` as an obj
 Note: The methodology should be used with the inputs transformed to [0, 1]^{d} cube and outputs roughly normalized to a standard normal.
 
 For sequential design  (one suggested design/experiment at a time):
-Running the code: the examples in the ```tests``` directory can be called from the command line with a set of arguments as follows: python tests/ex1.py noise_inputs initial_data_points.
+Running the code: the examples in the ```tests``` directory can be called from the command line with a set of arguments as follows: python tests/ex1.py ```noise_inputs``` ```num_init_data```.
 
-The examples have been setup with two example functions that have input variable stochasticity (the methodology is not suited just for this case of noise/uncertainty, this is one such case). The ```noise_inputs``` is basically the noise variance of an assumed Gaussian noise in the inputs. For an unknown function the noise can come from any source and the methodology should be able to treat unequivocally.
+The examples have been setup with two example functions that have input variable stochasticity (the methodology is not suited just for this case of noise/uncertainty, this is one such case). The ```noise_inputs``` is basically the noise variance of an assumed Gaushesian noise in the inputs. For an unknown function the noise can come from any source and the methodology should be able to treat unequivocally.
 
 After each iteration a plot depicting the state of the Pareto Frontier is generated, this can be controlled by a make_plots flag  
 
 For multiple-sequential designs  (multiple suggested design/experiment in a batch):
 
-Replace the p.optimize int he examples with p.suggest(num_add, round=False) this returns two objects. The first one with the array of inputs of size (num_add, dimensionality) and the second with the value of the EEIHV at each of the ```num_add``` suggested inputs.
+Replace the p.optimize in examples ex1.py and ex2.py with p.suggest(num_add) this returns two objects. The first one with the array of inputs of size (num_add, dimensionality) and the second with the value of the EEIHV at each of the ```num_add``` suggested inputs. ex3.py demonstrates how the methodology suggests multiple experiments. In case of a user supplied unknown function the noise argument to be given to the driver code  can be a dummy number for example:
+python tests/ex1.py 0.0 ```num_init_data```.
 
 More documentation to follow.
 
