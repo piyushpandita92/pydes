@@ -5,6 +5,9 @@ Test the multi-objective optimization algorithm.
 
 import matplotlib
 matplotlib.use('PS')
+import seaborn as sns
+sns.set_style("white")
+sns.set_context("paper")
 import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
