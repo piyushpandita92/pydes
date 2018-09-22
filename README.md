@@ -4,7 +4,7 @@ Multi-objective Stochastic Bayesian Optimization with Quantified Uncertainties o
 This module is called pydes. \\
 
 To install the package do the following:
-pip install git+git://github.com/PredictiveScienceLab/GPy.git@pymc  \\
+pip install git+git://github.com/piyushpandita92/pydes.git  \\
 
 The simple examples ex1.py, ex2.py provide a self explanatory overview of using pydes.
 This code works for maximizing two functions (so the user would have to include that in their function object).\\
