@@ -1,7 +1,7 @@
 # pydes
 Multi-objective Stochastic Bayesian Optimization with Quantified Uncertainties on the Pareto Frontier.
 
-This module is called pydes. \
+This module is called pydes. 
 
 To install the package do the following:
 pip install git+git://github.com/piyushpandita92/pydes.git  \\
