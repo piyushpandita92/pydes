@@ -26,7 +26,7 @@ The examples have been setup with two example functions that have input variable
 
 After each iteration a plot depicting the state of the Pareto Frontier is generated, this can be controlled by a make_plots flag  
 
-For multiple-sequential designs  (multiple suggested design/experiment in a batch):
+For multiple sequential designs  (multiple suggested design/experiment in a batch):
 
 Replace the p.optimize in examples ex1.py and ex2.py with p.suggest(num_add) this returns two objects. The first one with the array of inputs of size (num_add, dimensionality) and the second with the value of the EEIHV at each of the ```num_add``` suggested inputs. ex3.py demonstrates how the methodology suggests multiple experiments. In case of a user supplied unknown function the noise argument to be given to the driver code can be a placeholder, for example:
 python tests/ex1.py 0.0 ```num_init_data```.
