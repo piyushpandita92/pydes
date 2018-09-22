@@ -26,6 +26,10 @@ The examples have been setup with two example functions that have input variable
 
 After each iteration a plot depicting the state of the Pareto Frontier is generated, this can be controlled by a make_plots flag  
 
+For multiple-sequential designs  (multiple suggested design/experiment in a batch):
+
+Replace the p.optimize int he examples with p.suggest(num_add, round=False) this returns two objects. The first one with the array of inputs of size (num_add, dimensionality) and the second with the value of the EEIHV at each of the ```num_add``` suggested inputs.
+
 More documentation to follow.
 
 
