@@ -1,6 +1,9 @@
 # pydes
 Multi-objective Stochastic Bayesian Optimization with Quantified Uncertainties on the Pareto Frontier.
 
+This package was used in following paper, demonstrating the details of the methodology:
+Pandita, Piyush, Ilias Bilionis, Jitesh Panchal, B. P. Gautham, Amol Joshi, and Pramod Zagade. "STOCHASTIC MULTIOBJECTIVE OPTIMIZATION ON A BUDGET: APPLICATION TO MULTIPASS WIRE DRAWING WITH QUANTIFIED UNCERTAINTIES." International Journal for Uncertainty Quantification 8, no. 3 (2018).
+
 This module is called pydes. number
 
 It needs the support of the following PYTHON packages.
@@ -11,6 +14,11 @@ It needs the support of the following PYTHON packages.
 
 To install the package do the following:
 pip install git+git://github.com/piyushpandita92/pydes.git  
+
+or clone the repository and run python setup.py install.
+
+Import the package like as follows:
+ ```import pydes```
 
 The simple examples ex1.py, ex2.py provide a self explanatory overview of using pydes.
 This code works for maximizing two functions (so the user would have to include that in their function object).
