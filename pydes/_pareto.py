@@ -6,7 +6,7 @@ Implementation of the algorithm that gradually disovers the Pareto front.
 import numpy as np
 import GPy
 from scipy.optimize import minimize
-import design
+from pyDOE import *
 import tqdm
 from . import get_idx_of_observed_pareto_front
 from . import ehvi_2d_func
@@ -292,7 +292,7 @@ class ParetoFront(DistributedObject):
         if isinstance(X_design, int):
             num_design = X_design
             if self.rank == 0:
-                X_design = design.latin_center(num_design, self.num_dim)
+		X_design = lhs(self.num_dim, num_design)
             else:
                 X_design = None
             if self.use_mpi:
@@ -500,8 +500,7 @@ class ParetoFront(DistributedObject):
             pbar = tqdm.tqdm(total=num_of_design_samples)
         old_variances = []
         for _ in xrange(num_of_design_samples):
-            X_design = design.latin_center(num_of_design_points,
-                                           self.X.shape[1])
+            X_design = lhs(self.X.shape[1], num_of_design_points)
             X_design = np.vstack((X_design,self.X)) #Adding the observed designs to the set of sampled designs.
             b = np.array(self.ehvi_opt_bounds)
             X_design = b[:, 0] + (b[:, 1] - b[:, 0]) * X_design
