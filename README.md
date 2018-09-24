@@ -1,11 +1,14 @@
 # pydes
+This module is called pydes.
+
 Multi-objective Stochastic Bayesian Optimization with Quantified Uncertainties on the Pareto Frontier.
 
 This package was used in following paper, demonstrating the details of the methodology:
+
+
 Pandita, Piyush, Ilias Bilionis, Jitesh Panchal, B. P. Gautham, Amol Joshi, and Pramod Zagade. "STOCHASTIC MULTIOBJECTIVE OPTIMIZATION ON A BUDGET: APPLICATION TO MULTIPASS WIRE DRAWING WITH QUANTIFIED UNCERTAINTIES." International Journal for Uncertainty Quantification 8, no. 3 (2018).
 
-This module is called pydes. number
-
+ 
 It needs the support of the following PYTHON packages.
 1. pyDOE 
 2. GPy
