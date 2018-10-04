@@ -292,7 +292,7 @@ class ParetoFront(DistributedObject):
         if isinstance(X_design, int):
             num_design = X_design
             if self.rank == 0:
-		X_design = lhs(self.num_dim, num_design)
+                X_design = lhs(self.num_dim, num_design)
             else:
                 X_design = None
             if self.use_mpi:
