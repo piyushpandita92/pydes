@@ -11,9 +11,10 @@ Pandita, Piyush, Ilias Bilionis, Jitesh Panchal, B. P. Gautham, Amol Joshi, and 
  
 It needs the support of the following PYTHON packages.
 1. pyDOE 
-2. GPy
-3. seaborn
-4. tqdm
+2. GPy (version 1.9.2, mandatory)
+3. matplotlib(version 2.0.0, best vizualization)
+4. seaborn (version 0.7.1, best vizualization)
+5. tqdm
 
 To install the package do the following:
 pip install git+git://github.com/piyushpandita92/pydes.git  
