@@ -385,7 +385,7 @@ class ParetoFront(DistributedObject):
             D = get_symmetric_deviation_function(Y1, Y2, Q_beta, Y_p,
                                                  how=self.how)
             c = ax.contour(self.trans_function(Y1), self.trans_function(Y2), self.trans_function(Q_beta), levels=[0.99999],
-                           colors=(sns.color_palette()[2],
+                           colors=(sns.color_palette()[0],
                                    'green', 'blue', (1, 1, 0),
                                    '#afeeee', '0.5'),
                             linestyle='--')
@@ -448,7 +448,8 @@ class ParetoFront(DistributedObject):
             if self.verbosity >= 1:
                 print '\t> done'
                 print '\t> optimizing EHVI'
-            x_best, ei_max = self.suggest(self.add_in_parallel)
+            x_best, ei_max = self.optimize_ehvi(self.X_design)
+            # x_best, ei_max = self.suggest(self.add_in_parallel)
             if self.verbosity >= 1:
                 print '\t> done'
             self.ei_values.append(ei_max)
@@ -464,13 +465,15 @@ class ParetoFront(DistributedObject):
                 print '\t> adding best design point'
                 print '\t> x_best', x_best
                 print '\t> starting simulation'
-            y = np.array([self.obj_funcs(x) for x in x_best])
+            # y = np.array([self.obj_funcs(x) for x in x_best])
+            y = self.obj_funcs(x_best)
             #y = parallel_eval(self.obj_funcs, x_best)
             self.add_new_observations(x_best, y)
             if self.verbosity>1:
                 if self.rank == 0:
-                    ax.plot(y[:, 0], y[:, 1], 'rx', markersize=5,
-                            markeredgewidth=2)
+                    ax.plot(y[0], y[1], 'rx')
+                    # ax.plot(y[:, 0], y[:, 1], 'rx', markersize=5,
+                    #         markeredgewidth=2)
                 plt.pause(0.05)
             if self.make_plot_status and self.rank == 0:
                 self.plot_status(it)
