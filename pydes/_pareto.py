@@ -2,7 +2,7 @@
 Implementation of the algorithm that gradually disovers the Pareto front.
 
 """
-
+import os
 import numpy as np
 import GPy
 from scipy.optimize import minimize
@@ -21,6 +21,7 @@ from . import get_Vorobev_expectation
 from . import get_symmetric_deviation_function
 #from mpi4py import MPI as mpi
 import copy
+import pickle
 
 __all__ = ['ParetoFront']
 
@@ -190,7 +191,8 @@ class ParetoFront(DistributedObject):
                  comm=None,
                  trans_function=None,
                  label=('Objective 1', 'Objective 2'),
-                 pareto_how='max'):
+                 pareto_how='max',
+                 save_surrogates=False):
         super(ParetoFront, self).__init__(comm=comm, verbosity=verbosity)
         assert X.ndim == 2
         self.X = X
@@ -224,6 +226,9 @@ class ParetoFront(DistributedObject):
         self.gp_fixed_noise = gp_fixed_noise
         self.do_posterior_samples = do_posterior_samples
         self._surrogates = None
+        self.save_surrogates = save_surrogates
+        if self.save_surrogates:
+            self._surrogates_log = []
         self.train_surrogates()
         self._update_yref(y_ref)
         self.figname = figname
@@ -265,6 +270,8 @@ class ParetoFront(DistributedObject):
             gp.optimize_restarts(self.gp_opt_num_restarts)
             self.Y_projected[:, i] = gp.predict(self.X)[0][:, 0]
             self._surrogates.append(gp)
+        if self.save_surrogates:
+            self._surrogates_log.append(self._surrogates)
         self.idx = get_idx_of_observed_pareto_front(self.Y_projected, how=self.how)
 
     def _optimize_ehvi(self, x0):
@@ -479,6 +486,9 @@ class ParetoFront(DistributedObject):
                 self.plot_status(it)
             if self.verbosity >= 1:
                 print '\t> done'
+            if it == self.max_it-1:
+                with open("surrogates.pkl", "wb") as f:
+                    pickle.dump(self._surrogates_log, f)
 
     def add_new_observations(self, x, y):
         """
