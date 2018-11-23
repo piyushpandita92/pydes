@@ -44,5 +44,5 @@ Replace the p.optimize in examples ex1.py and ex2.py with p.suggest(num_add) thi
 python tests/ex1.py 0.0 ```num_init_data```.
 
 More documentation to follow.
-
+If you have any questions about ```pydes```, contact me at piyush100078@gmail.com .
 
