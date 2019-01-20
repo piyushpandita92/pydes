@@ -8,6 +8,7 @@ This package was used in following paper, demonstrating the details of the metho
 
 Pandita, Piyush, Ilias Bilionis, Jitesh Panchal, B. P. Gautham, Amol Joshi, and Pramod Zagade. "STOCHASTIC MULTIOBJECTIVE OPTIMIZATION ON A BUDGET: APPLICATION TO MULTIPASS WIRE DRAWING WITH QUANTIFIED UNCERTAINTIES." International Journal for Uncertainty Quantification 8, no. 3 (2018).
 
+Parts of the code have been translated from the package available at http://liacs.leidenuniv.nl/~csmoda/index.php?page=code.
  
 It needs the support of the following PYTHON packages.
 1. pyDOE 
