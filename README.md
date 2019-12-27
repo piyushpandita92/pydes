@@ -1,5 +1,5 @@
 # pydes
-This module is called pydes.
+This module is called pydes (Python 2.7).
 
 Multi-objective Stochastic Bayesian Optimization with Quantified Uncertainties on the Pareto Frontier.
 
