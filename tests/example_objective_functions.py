@@ -22,9 +22,9 @@ class ObjFunc1(object):
     def f1(self,x):
         y = 0
         for _ in xrange(self.n_samp):
-        xi = copy.copy(x)
+            xi = copy.copy(x)
             xi = xi + float(self.sigma) * np.random.randn((np.size(x)),)
-        b1 = 15. * xi[0] - 5.
+            b1 = 15. * xi[0] - 5.
             b2 = 15. * xi[1]
             k = (b2 - 5.1 / 4. / math.pi ** 2 * b1 ** 2 + 5. / math.pi * b1 - 6.) ** 2. \
             + 10. * ((1. - 1. / 8. / math.pi) * math.cos(b1) + 1.)
