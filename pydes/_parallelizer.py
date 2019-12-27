@@ -27,11 +27,11 @@ class Parallelizer(DistributedObject):
     """
 
     def __init__(self, **kwargs):
-        if not kwargs.has_key('comm'):
+        if 'comm' not in kwargs:
             comm = None
         else:
             comm = kwargs['comm']
-        if not kwargs.has_key('verbosity'):
+        if 'verbosity' not in kwargs:
             verbosity = 0
         else:
             verbosity = kwargs['verbosity']
@@ -54,10 +54,10 @@ class Parallelizer(DistributedObject):
             my_num_restarts = 1
         num_restarts = my_num_restarts * size
         if self.verbosity >= 2:
-            print '> optimizing hyper-parameters using multi-start'
-            print '> num available cores:', size
-            print '> num restarts:', num_restarts
-            print '> num restarts per core:', my_num_restarts
+            print('> optimizing hyper-parameters using multi-start')
+            print('> num available cores:', size)
+            print('> num restarts:', num_restarts)
+            print('> num restarts per core:', my_num_restarts)
         # Let everybody work with its own data
         self.randomize()
         super(Parallelizer, self).optimize_restarts(num_restarts=my_num_restarts,
@@ -68,7 +68,7 @@ class Parallelizer(DistributedObject):
                                               self.log_likelihood(),
                                               comm=comm)
             if self.verbosity >= 2:
-                print '> best hyperparameters:', best_x_opt
+                print('> best hyperparameters:', best_x_opt)
             self.optimizer_array = best_x_opt
 
 

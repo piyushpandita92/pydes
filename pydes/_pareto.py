@@ -160,7 +160,7 @@ class ParetoFront(DistributedObject):
         if self.y_ref is None:
             self.y_ref = value
         else:
-            for k in xrange(self.num_obj):
+            for k in range(self.num_obj):
                 self.y_ref[k] = t(self.y_ref[k], value[k])
 
     def __init__(self, X, Y, obj_funcs,
@@ -257,7 +257,7 @@ class ParetoFront(DistributedObject):
         """
         self._surrogates = []
         self.Y_projected = self.Y.copy()
-        for i in xrange(self.num_obj):
+        for i in range(self.num_obj):
             k = self.kernel_type(self.num_dim, ARD=True)
             gp = self.gp_regression_type(self.X, self.Y[:, i][:, None], k,
                                          comm=self.comm,
@@ -316,11 +316,11 @@ class ParetoFront(DistributedObject):
             if self.verbosity >= 1:
                 pbar.update(self.size)
             if self.verbosity >= 2:
-                print '\t\t> computing EHVI at design point:\n', x0
+                print('\t\t> computing EHVI at design point:\n', x0)
             x, ei = self._optimize_ehvi(x0)
             if self.verbosity >= 2:
-                print '\t\t> final design point:\n', x
-                print '\t\t> found: ', ei
+                print('\t\t> final design point:\n', x)
+                print('\t\t> found: ', ei)
             if ei > ei_max:
                 ei_max = ei
                 x_best = x
@@ -338,8 +338,8 @@ class ParetoFront(DistributedObject):
         Y0 = self.Y.copy()
         x_best = []
         eis = []
-        for j in xrange(k):
-            for i in xrange(self.num_obj):
+        for j in range(k):
+            for i in range(self.num_obj):
                 gp = self.surrogates[i]
                 gp.set_XY(self.X, self.Y[:, i][:, None])
                 self.Y_projected = self.Y.copy()
@@ -353,15 +353,15 @@ class ParetoFront(DistributedObject):
                  for gp in self.surrogates]
             x_best.append(x)
             if self.verbosity >=1:
-                print '\t\t> add (EI=%f):' % ei
-                print x
+                print('\t\t> add (EI=%f):' % ei)
+                print(x)
             self.X = np.vstack([self.X, x])
             self.Y = np.vstack([self.Y,[y]])
         x_best = np.array(x_best)
         self.X = X0
         self.Y = Y0
         self.Y_projected = self.Y.copy()
-        for i in xrange(self.num_obj):
+        for i in range(self.num_obj):
             self.surrogates[i].set_XY(X0, Y0[:, i][:, None])
             self.Y_projected[:, i] = self.surrogates[i].predict(self.X)[0][:, 0]
         self.idx = get_idx_of_observed_pareto_front(self.Y_projected,
@@ -375,7 +375,7 @@ class ParetoFront(DistributedObject):
         import matplotlib
         import matplotlib.pyplot as plt
         import seaborn as sns
-        from _plot_pareto import plot_pareto
+        from ._plot_pareto import plot_pareto
         sns.set_style("white")
         if self.get_fig is None:
             fig, ax = plt.subplots()
@@ -431,7 +431,7 @@ class ParetoFront(DistributedObject):
         figname = self.figname + '_' + str(it).zfill(len(str(self.max_it))) \
                   + '.pdf'
         if self.verbosity>=1:
-            print '\t> writing:', figname
+            print('\t> writing:', figname)
         fig.savefig(figname)
         plt.close(fig)
 
@@ -448,30 +448,30 @@ class ParetoFront(DistributedObject):
                 ax.plot(self.Y_projected[:, 0], self.Y_projected[:, 1], 'bo')
             plt.pause(0.05)
         self.ei_values = []
-        for it in xrange(self.max_it):
+        for it in range(self.max_it):
             if self.verbosity >= 1:
-                print 'step {0:s}'.format(str(it).zfill(len(str(self.max_it))))
-                print '\t> training surrogates'
+                print('step {0:s}'.format(str(it).zfill(len(str(self.max_it)))))
+                print('\t> training surrogates')
             if self.verbosity >= 1:
-                print '\t> done'
-                print '\t> optimizing EHVI'
+                print('\t> done')
+                print('\t> optimizing EHVI')
             # x_best, ei_max = self.optimize_ehvi(self.X_design)
             x_best, ei_max = self.suggest(self.add_in_parallel)
             if self.verbosity >= 1:
-                print '\t> done'
+                print('\t> done')
             self.ei_values.append(ei_max)
             rel_ei_max = ei_max / self.ei_values[0]
             if self.verbosity >= 1:
-                print '\t> rel_ei_max = {0:1.3f}'.format(rel_ei_max)
+                print('\t> rel_ei_max = {0:1.3f}'.format(rel_ei_max))
             if it >= self.add_at_least and rel_ei_max < self.rtol:
                 if self.verbosity >= 1:
-                    print '*** Converged (rel_ei_max = {0:1.7f} < rtol = {1:1.2e})'.format(rel_ei_max, self.rtol)
-                    print '\t> writing final status'
+                    print('*** Converged (rel_ei_max = {0:1.7f} < rtol = {1:1.2e})'.format(rel_ei_max, self.rtol))
+                    print('\t> writing final status')
                 break
             if self.verbosity >= 1:
-                print '\t> adding best design point'
-                print '\t> x_best', x_best
-                print '\t> starting simulation'
+                print('\t> adding best design point')
+                print('\t> x_best', x_best)
+                print('\t> starting simulation')
             y = np.array([self.obj_funcs(x) for x in x_best])
             # y = self.obj_funcs(x_best)
             #y = parallel_eval(self.obj_funcs, x_best)
@@ -485,7 +485,7 @@ class ParetoFront(DistributedObject):
             if self.make_plot_status and self.rank == 0:
                 self.plot_status(it)
             if self.verbosity >= 1:
-                print '\t> done'
+                print('\t> done')
             if it == self.max_it-1:
                 with open("surrogates.pkl", "wb") as f:
                     pickle.dump(self._surrogates_log, f)
@@ -509,10 +509,10 @@ class ParetoFront(DistributedObject):
         """
         Y_p = []
         if self.verbosity >= 1:
-            print '\t> sampling Pareto'
+            print('\t> sampling Pareto')
             pbar = tqdm.tqdm(total=num_of_design_samples)
         old_variances = []
-        for _ in xrange(num_of_design_samples):
+        for _ in range(num_of_design_samples):
             X_design = lhs(self.X.shape[1], num_of_design_points)
             X_design = np.vstack((X_design,self.X)) #Adding the observed designs to the set of sampled designs.
             b = np.array(self.ehvi_opt_bounds)
@@ -530,7 +530,7 @@ class ParetoFront(DistributedObject):
                 y = _m + _y
                 Y.append(y)
             Y = np.array(Y)
-            for i in xrange(Y.shape[2]):
+            for i in range(Y.shape[2]):
                 idx = get_idx_of_observed_pareto_front(Y[:, :, i].T,
                                                        how=self.how)
                 y_p = Y[:, idx, i].T

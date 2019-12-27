@@ -57,7 +57,7 @@ def plot_pareto(Y, y_ref,
     #        [Y[0, 1], Y[0, 1]], style, color=color, linewidth=linewidth)
     ax.plot([y_ref[0], Y[0, 0]],
             [Y[0, 1], Y[0, 1]], style, color=color, linewidth=linewidth)
-    for i in xrange(n-1):
+    for i in range(n-1):
         ax.plot([Y[i, 0], Y[i, 0], Y[i + 1, 0]],
                 [Y[i, 1], Y[i + 1, 1], Y[i + 1, 1]], style,
                 color=color,

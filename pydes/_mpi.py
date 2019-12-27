@@ -53,7 +53,7 @@ def distributed_xrange(n, comm=None):
     the processors as evenly as possible.
     """
     if comm is None:
-        return xrange(n)
+        return range(n)
     rank = comm.Get_rank()
     size = comm.Get_size()
     r = n % size
@@ -64,7 +64,7 @@ def distributed_xrange(n, comm=None):
     if rank >= r:
         my_start += r
     my_end = my_start + my_n
-    return xrange(my_start, my_end)
+    return range(my_start, my_end)
 
 
 def reduce_max(obj, val, comm=None):
