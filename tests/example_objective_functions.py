@@ -24,7 +24,7 @@ class ObjFunc1(object):
     """
     def f1(self,x):
         y = 0
-        for _ in xrange(self.n_samp):
+        for _ in range(self.n_samp):
 	    xi = copy.copy(x)
             xi = xi + float(self.sigma) * np.random.randn((np.size(x)),)
 	    b1 = 15. * xi[0] - 5.
@@ -36,7 +36,7 @@ class ObjFunc1(object):
 
     def f2(self,x):
         y = 0
-        for _ in xrange(self.n_samp):
+        for _ in range(self.n_samp):
             xi = copy.copy(x)
             xi = xi + float(self.sigma) * np.random.randn(np.size(x),)
             b1 = 15. * xi[0] - 5.
@@ -72,7 +72,7 @@ class ObjFunc2(object):
         Function 1.
         """
         y = 0.
-        for _ in xrange(self.n_samp):
+        for _ in range(self.n_samp):
             xi = x + float(self.sigma) * np.random.randn(np.size(x),)
             g = 100. * (((xi[1:6] - 0.5) ** 2 - np.cos(2. * np.pi * (xi[1:6]-0.5))).sum() + 5.)
             k = 0.5 * (xi[0]) * (g + 1.)
@@ -84,7 +84,7 @@ class ObjFunc2(object):
         Function 2.
         """
         y = 0.
-        for _ in xrange(self.n_samp):
+        for _ in range(self.n_samp):
             xi = x + float(self.sigma) * np.random.randn(np.size(x),)
             g = 100. * (((xi[1:6] - 0.5) ** 2 - np.cos(2. * np.pi * (xi[1:6] - 0.5))).sum() + 5.)
             k = 0.5 * (1. - xi[0]) * (g + 1.)

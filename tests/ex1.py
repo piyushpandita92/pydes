@@ -31,7 +31,7 @@ if __name__ == '__main__':
         shutil.rmtree(out_dir)
     os.makedirs(out_dir)
     dim = 2
-    max_it = 2
+    max_it = 1
     obj_funcs = ObjFunc1(sigma=sigma, n_samp=1)
     obj_funcs_true = ObjFunc1(sigma=sigma, n_samp=100)
     X_init = lhs(dim, n)
@@ -53,5 +53,9 @@ if __name__ == '__main__':
         lim=None,
         pareto_how='max',
         trans_function=trans_function,
-        figname=os.path.join(out_dir,'ex1'))
+        figname=os.path.join(out_dir,'ex1'),
+        save_surrogates=True)
     p.optimize(plot=True)
+    p.X, p.Y, p.Y_projected, p.X_init, p.Y_init
+    import pdb
+    pdb.set_trace()
