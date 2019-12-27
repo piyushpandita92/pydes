@@ -1,6 +1,5 @@
 """
 Some core functions.
-
 """
 
 
@@ -46,7 +45,6 @@ def _remove_dominated_2d(idx, Y):
 def get_idx_of_observed_pareto_front_2d_min(Y):
     """
     Fast algorithm for the pareto front for the case of two objectives.
-
     :param Y: The set of observed objectives. 2D numpy array. Rows are the
               number of observations and columns the numbers of objectives.
     :returns: The indices of the points that belong to the Pareto front.
@@ -60,7 +58,6 @@ def get_idx_of_observed_pareto_front_2d_min(Y):
 def get_idx_of_observed_pareto_front_2d_max(Y):
     """
     Fast algorithm for the pareto front for the case of two objectives.
-
     :param Y: The set of observed objectives. 2D numpy array. Rows are the
               number of observations and columns the numbers of objectives.
     :returns: The indices of the points that belong to the Pareto front.
@@ -76,7 +73,7 @@ def _all_greater_than(x1, x2):
     :returns:    ``True`` if the all elements of ``x1`` are greater than all
                  elements of ``x2``.
     """
-    for k in range(x1.shape[0]):
+    for k in xrange(x1.shape[0]):
         if x1[k] <= x2[k]:
             return False
     return True
@@ -89,8 +86,8 @@ def _get_indices_to_be_eliminated(Y):
     idx_to_be_eliminated.pop()
     num_obj = Y.shape[1]
     num_obs = Y.shape[0]
-    for i in range(num_obs):
-        for j in range(i + 1, num_obs):
+    for i in xrange(num_obs):
+        for j in xrange(i + 1, num_obs):
             if _all_greater_than(Y[i, :], Y[j, :]):
                 idx_to_be_eliminated.append(i)
             elif _all_greater_than(Y[j, :], Y[i, :]):
@@ -102,7 +99,6 @@ def get_idx_of_observed_pareto_front_min(Y):
     """
     Slow algorithm for the Pareto front that works for an arbitrary number of
     objectives.
-
     :param Y: The set of observed objectives. 2D numpy array. Rows are the
               number of observations and columns the numbers of objectives.
     :returns: The indices of the points that belong to the Pareto front.
@@ -120,7 +116,6 @@ def get_idx_of_observed_pareto_front_max(Y):
     """
     Slow algorithm for the Pareto front that works for an arbitrary number of
     objectives.
-
     :param Y: The set of observed objectives. 2D numpy array. Rows are the
               number of observations and columns the numbers of objectives.
     :returns: The indices of the points that belong to the Pareto front.
@@ -131,7 +126,6 @@ def get_idx_of_observed_pareto_front(Y, how='max'):
     """
     Slow algorithm for the Pareto front that works for an arbitrary number of
     objectives.
-
     :param Y:   The set of observed objectives. 2D numpy array. Rows are the
                 number of observations and columns the numbers of objectives.
     :param how: Do you want to minimize or maximize?
@@ -147,14 +141,13 @@ def compute_sorted_list_of_pareto_points(Y, y_ref):
     """
     Compute and return the sorted list of all the i-th coordinates of a
     set of Pareto points.
-
     This is the ``b`` of Emerich (2008). See page 5.
     """
     m = Y.shape[1]
-    return np.concatenate([[[-np.inf for _ in range(m)]],
+    return np.concatenate([[[-np.inf for _ in xrange(m)]],
                            np.sort(Y, axis=0),
                            y_ref[None, :],
-                           [[np.inf for _ in range(m)]]], axis=0)
+                           [[np.inf for _ in xrange(m)]]], axis=0)
 
 
 def plot_pareto(Y, ax=None, style='-',
@@ -176,7 +169,7 @@ def plot_pareto(Y, ax=None, style='-',
     n = Y.shape[0]
     ax.plot([max_obj[0], Y[0, 0]],
             [Y[0, 1], Y[0, 1]], style, color=color, linewidth=linewidth)
-    for i in range(n-1):
+    for i in xrange(n-1):
         ax.plot([Y[i, 0], Y[i, 0], Y[i + 1, 0]],
                 [Y[i, 1], Y[i + 1, 1], Y[i + 1, 1]], style,
                 color=color,
@@ -233,7 +226,6 @@ def dexipsi(fmax, cellcorner, mu, s):
     """
     Deerivative of the partial expected improvement function 'psi'
     with respect to mu and s.
-
     :returns:  The result of the function, derivative with respect to mu,
                and derivative with respect to s.
     """
@@ -251,7 +243,6 @@ def dexipsi(fmax, cellcorner, mu, s):
 def compute_ehvi_2d_max(Yp, r, mu, s):
     """
     Compute the EHVI for a 2D objective that are maximized.
-
     :param Yp:  The Pareto front sorted along the first objective.
     :param r:   The reference point.
     :param mu:  The predictive mean.
@@ -269,10 +260,10 @@ def compute_ehvi_2d_max(Yp, r, mu, s):
     Sstart = k - 1
     Shorizontal = 0
     fmax = np.zeros((2,))
-    for i in range(k+1):
+    for i in xrange(k+1):
         Sminus = 0.
         Shorizontal = Sstart
-        for j in range(k-i, k+1):
+        for j in xrange(k-i, k+1):
             if j == k:
                 fmax[1] = r[1]
                 cu1 = 1e99
@@ -368,7 +359,6 @@ def compute_ehvi_2d_max(Yp, r, mu, s):
 def compute_ehvi_2d_min(Yp, r, mu, s):
     """
     Compute the EHVI for a 2D objective that are maximized.
-
     :param Yp:  The Pareto front sorted along the first objective.
     :param r:   The reference point.
     :param mu:  The predictive mean.
@@ -381,7 +371,6 @@ def compute_ehvi_2d_min(Yp, r, mu, s):
 def compute_ehvi_2d(Yp, r, mu, s, how='max'):
     """
     Compute the EHVI for a 2D objective.
-
     :param Yp:  The Pareto front sorted along the first objective.
     :param r:   The reference point.
     :param mu:  The predictive mean.
@@ -401,7 +390,6 @@ def compute_ehvi_2d(Yp, r, mu, s, how='max'):
 def ehvi_2d_func(x, objs, Yp, r, how='max'):
     """
     The EHVI as a function of x.
-
     :param objs:    List of GPy.GPRegression objects that contain the fitted
                     surrogates.
     :param Yp:  The Pareto front sorted along the first objective.
@@ -414,11 +402,11 @@ def ehvi_2d_func(x, objs, Yp, r, how='max'):
     s = np.ndarray((2,))
     dmu_dx = np.ndarray((2, num_dim))
     ds_dx = np.ndarray((2, num_dim))
-    for k in range(len(objs)):
+    for k in xrange(len(objs)):
         f = objs[k]
         m, v = f.predict(x[None, :])
         mu[k] = m[0, 0]
-	s[k] = math.sqrt(v[0, 0] - f.likelihood.variance)
+    s[k] = math.sqrt(v[0, 0] - f.likelihood.variance)
         dm_dx, dv_dx = f.predictive_gradients(x[None, :])
         dmu_dx[k, :] = dm_dx[0, :, 0]
         ds_dx[k, :] = .5 * dv_dx[0, :] / s[k]
@@ -438,7 +426,7 @@ def calculate_S(Yp, r):
     n = Yp.shape[0]
     if n >= 1:
         answer += (Yp[n-1, 0] - r[0]) * (Yp[n-1, 1] - r[1])
-        for i in range(n-2, -1, -1):
+        for i in xrange(n-2, -1, -1):
             answer += (Yp[i, 0] - r[0]) * (Yp[i, 1] - Yp[i+1, 1])
     return answer
 
@@ -451,26 +439,26 @@ def _sample_new_S_2d(Yp_and_work, r, mu, s, idx):
     n = Yp_and_work.shape[0] - 1
     num_obj = Yp_and_work.shape[1]
     res = np.zeros((num_obj, ))
-    for k in range(num_obj):
+    for k in xrange(num_obj):
         res[k] = mu[k] + s[k] * np.random.randn()
         if res[k] <= r[k]:
             return 0.
     Yp_and_work[-1, :] = res
     c = 0
-    for i in range(n):
+    for i in xrange(n):
         if res[0] > Yp_and_work[i, 0]:
             if res[1] > Yp_and_work[i, 1]:
                 idx[c] = -1
                 c += 1
-                for j in range(i+1, n):
+                for j in xrange(i+1, n):
                     if res[0] < Yp_and_work[j, 0]:
-                        for k in range(j, n):
+                        for k in xrange(j, n):
                             idx[c] = k
                             c += 1
                         break
                 break
         else:
-            for k in range(i, n):
+            for k in xrange(i, n):
                 idx[c] = k
                 c += 1
             break
@@ -482,7 +470,7 @@ def _sample_new_S_2d(Yp_and_work, r, mu, s, idx):
 @jit(cache=True)
 def _monte_carlo_new_S_2d(num_samples, Yp_and_work, r, mu, s, idx):
     ss = 0.
-    for i in range(num_samples):
+    for i in xrange(num_samples):
         ss += _sample_new_S_2d(Yp_and_work, r, mu, s, idx)
     return ss / num_samples
 
@@ -490,7 +478,6 @@ def _monte_carlo_new_S_2d(num_samples, Yp_and_work, r, mu, s, idx):
 def monte_carlo_ehvi_2d(num_samples, Yp, r, mu, s):
     """
     Monte Carlo computation of the EHVI for maximizing the objectives.
-
     :param objs:    List of GPy.GPRegression objects that contain the fitted
                     surrogates.
     :param Yp:  The Pareto front sorted along the first objective.
